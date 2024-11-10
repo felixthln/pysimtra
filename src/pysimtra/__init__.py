@@ -32,8 +32,13 @@ def import_exe(path: Path | str):
         raise ValueError('The "simtra_cmd.exe" could\'nt be found in the given directory.')
     if not (path / 'ScatteringAngleTables').is_dir():
         raise ValueError('The "ScatteringAngleTables" directory could\'nt be found in the given directory.')
-    # Copy the SIMTRA command version, replace if already exists
+    # Create a directory inside the package to store the executable
     dest_path = Path(__file__).parent / 'simtra' / 'app'
+    dest_path.mkdir(parents=True, exist_ok=True)
+    # Copy the SIMTRA command version, replace if already exists
     shutil.copy(path / 'simtra_cmd.exe', dest_path / 'simtra_cmd.exe', )
     # Copy all contents of the scattering angle table, replace if already exists
     shutil.copytree(path / 'ScatteringAngleTables', dest_path / 'ScatteringAngleTables', dirs_exist_ok=True)
+    # Also create a directory for storing the temporary SIMTRA files
+    temp_path = Path(__file__).parent / 'temporary'
+    temp_path.mkdir(parents=True, exist_ok=True)

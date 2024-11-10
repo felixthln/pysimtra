@@ -17,7 +17,7 @@ class Magnetron:
     n_particles: int = None
     save_every_n_particles: int = None
     sputter_surface_index: int = None  # begins at 1
-    racetrack_file_path: str = None
+    racetrack_file_path: Path = None
     racetrack_type: str = None
     racetrack_t0: int = None
     racetrack_row_res: int = None  # in m
@@ -44,7 +44,7 @@ class Magnetron:
     def __init__(self,
                  transported_element: str,
                  m_object: DummyObject,
-                 racetrack_file_path: str,
+                 racetrack_file_path: str | Path,
                  n_particles: int = 10 ** 5,
                  save_every_n_particles: int = 0,
                  sputter_surface_index: int = 1,
@@ -111,6 +111,11 @@ class Magnetron:
                 raise ValueError('For the transported element %s no surface binding energy could be found. Please '
                                  'specify one by setting "surface_binding_energy" parameter explicitly.' %
                                  transported_element)
+        # Convert the racetrack path to a pathlib object
+        if isinstance(racetrack_file_path, str):
+            racetrack_file_path = Path(racetrack_file_path)
+        # In case the user works with relative file paths, resolve the path
+        racetrack_file_path = racetrack_file_path.resolve()
         # Store the parameters in the class
         self.transported_element = transported_element
         self.m_object = m_object
@@ -137,7 +142,7 @@ class Magnetron:
         self.source_type = source_type
 
     @classmethod
-    def from_file(cls, path: Path | str):
+    def from_file(cls, path: str | Path):
 
         """
         Creates a Magnetron object from a given ".smo" file or ".sin" file. In case of a ".sin" file, only the
@@ -153,6 +158,16 @@ class Magnetron:
         path = Path(path) if isinstance(path, str) else path
         # Load the file and initialize the class
         return read_sin(path, only_magnetron=True) if path.suffix == '.sin' else read_smo(path)
+
+    # Property function to allow the access to the magnetron name without accessing it through the dummy object
+    @property
+    def name(self) -> str:
+        return self.m_object.name
+
+    # Property function to allow setting to the magnetron name without accessing it through the dummy object
+    @name.setter
+    def name(self, value: str):
+        self.m_object.name = value
 
     # :- Magic functions
 

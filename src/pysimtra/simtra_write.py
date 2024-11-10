@@ -200,7 +200,7 @@ def write_magnetron(mag: Magnetron, file):
     # At the end of the magnetron object definition, add information about the sputtering surface
     write('surfaceSputters', mag.sputter_surface_index, file)
     write('racetrack_t0', mag.racetrack_t0, file)  # whatever this is
-    write('fileRacetrack', mag.racetrack_file_path, file)
+    write('fileRacetrack', str(mag.racetrack_file_path), file)  # make sure the path is converted to string
     write('racetrackType', mag.racetrack_type, file)
 
 
