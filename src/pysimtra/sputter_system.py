@@ -25,7 +25,7 @@ class SputterSystem:
                  dummy_objects: DummyObject | list[DummyObject], output_path: str | Path):
 
         """
-        Creates a single or multi-magnetron sputter system from a chamber, magnetro(s) and objects. For each magnetron,
+        Creates a single or multi-magnetron sputter system from a chamber, magnetron(s) and objects. For each magnetron,
         a SIMTRA simulation can be executed.
 
         :param chamber: chamber object

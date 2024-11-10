@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pysimtra"
+version = "1.0.0"
+description = "A package for simulating the transport of sputtered atoms through the gas phase in parallel."
+authors = [
+    { name = "Felix Thelen", email = "felix.thelen@ruhr-uni-bochum.de" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.11",
+    "License :: OSI Approved :: GNU GPLv3",
+    "Operating System :: Windows",
+]
+dependencies = [
+    "numpy>=1.26.0",
+    "pandas>=2.1.1",
+    "notebook>=7.2.0",
+]
+
+[project.urls]
+Home = "https://github.com/felixthln/pysimtra"
