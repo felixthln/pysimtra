@@ -49,6 +49,10 @@ ps.import_exe(simtra_path)
 Afterward, all functionalities of the package can be used to full extend. The main capabilities are shown in the 
 jupyter notebook [examples.ipynb](examples.ipynb).
 
+## Limitations
+
+Still needs to be defined. For example, the functionality for the SIMTRA movement features are not implemented (yet)
+
 ## Terms of Use
 
 The package is distributed under the [GNU GPLv3](https://www.gnu.org/licenses/quick-guide-gplv3.html) license. See the 
