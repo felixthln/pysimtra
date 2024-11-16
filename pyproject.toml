@@ -1,11 +1,11 @@
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "pysimtra"
 version = "1.0.0"
-description = "A package for simulating the transport of sputtered atoms through the gas phase in parallel."
+description = "A package for simulating the transport of sputtered atoms for multiple magnetrons in parallel."
 authors = [
     { name = "Felix Thelen", email = "felix.thelen@ruhr-uni-bochum.de" }
 ]
