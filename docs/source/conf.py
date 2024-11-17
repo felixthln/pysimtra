@@ -3,6 +3,13 @@
 # For the full list of built-in configuration values, see the documentation:
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 
+# -- Path setup --------------------------------------------------------------
+# Add the path to the code to the system paths
+
+import sys
+from pathlib import Path
+sys.path.append(str(Path(__file__).parents[2] / 'src' / 'pysimtra'))
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
