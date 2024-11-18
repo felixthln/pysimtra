@@ -12,5 +12,5 @@ documentation for details.
 
    getting_started
 
-.. automodule:: pysimtra.module
+.. automodule:: pysimtra
    :members:
