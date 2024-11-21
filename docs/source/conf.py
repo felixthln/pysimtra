@@ -44,3 +44,6 @@ html_theme_options = {
         "text": "pySIMTRA"
     }
 }
+
+# If True, show link to rst source on rendered HTML pages
+html_show_sourcelink = False  # Remove 'view source code' from top of page
