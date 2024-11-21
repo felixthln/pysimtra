@@ -10,7 +10,6 @@ documentation for details.
    :maxdepth: 2
    :caption: Contents:
 
-   getting_started
-
-.. automodule:: pysimtra
-   :members:
+   getting_started/index
+   user_guide/index
+   api_reference/index

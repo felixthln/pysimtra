@@ -7,13 +7,12 @@
 # Add the path to the code to the system paths
 
 import sys
-#from pathlib import Path
-#sys.path.append(str(Path(__file__).parents[2] / 'src' / 'pysimtra'))
+from pathlib import Path
+sys.path.append(str(Path(__file__).parents[2] / 'src' / 'pysimtra'))
 
-import os
-sys.path.insert(0, os.path.abspath('../..'))
-
-print(sys.path)
+#import os
+#sys.path.insert(0, os.path.abspath('../..'))
+#print(sys.path)
 
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
@@ -33,10 +32,15 @@ extensions = [
 templates_path = ['_templates']
 exclude_patterns = []
 
-
-
 # -- Options for HTML output -------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = 'pydata_sphinx_theme'
 html_static_path = ['_static']
+
+# Define the theme options like title
+html_theme_options = {
+    "logo": {
+        "text": "pySIMTRA"
+    }
+}
