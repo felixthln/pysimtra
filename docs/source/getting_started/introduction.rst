@@ -1,3 +1,4 @@
-############
 Introduction
-############
+============
+
+Introductory text
