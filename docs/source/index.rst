@@ -15,15 +15,11 @@ documentation for details.
    getting_started/introduction
    getting_started/limitations
 
-.. toctree::
-   :maxdepth: 2
    :caption: User guide:
 
    user_guide/single_cathode_system
    user_guide/multi_cathode_system
 
-.. toctree::
-   :maxdepth: 2
    :caption: API reference:
 
    api_reference/sputter_system
