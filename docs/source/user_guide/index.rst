@@ -1,4 +1,4 @@
-User guide
+User Guide
 ==========
 
 Here will be practical tips in how to use the package.

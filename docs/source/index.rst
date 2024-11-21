@@ -8,16 +8,16 @@ documentation for details.
 
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    getting_started/index
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    user_guide/index
 
 .. toctree::
-   :titlesonly:
+   :maxdepth: 2
 
    api_reference/index

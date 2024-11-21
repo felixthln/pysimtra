@@ -1,4 +1,4 @@
-API reference
+API Reference
 =============
 
 Here will be the list of classes and methods.
