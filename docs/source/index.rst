@@ -8,13 +8,16 @@ documentation for details.
 
 
 .. toctree::
+   :titlesonly:
 
    getting_started/index
 
 .. toctree::
+   :titlesonly:
 
    user_guide/index
 
 .. toctree::
+   :titlesonly:
 
    api_reference/index
