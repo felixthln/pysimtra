@@ -1,0 +1,2 @@
+# Include the surface binding energies in the build of the package
+include src/pysimtra/e_binding.csv
