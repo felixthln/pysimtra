@@ -6,9 +6,9 @@ pySIMTRA
 (**Si**\ mulation of **M**\ etal **Tra**\ nsport), a Monte Carlo code for simulating the transport
 of sputtered atoms through the gas phase. SIMTRA allows for the definition of custom sputter systems in 3D by a
 graphical user interface and does not only calculate the deposition profile, but also properties of the deposited atoms
-such as energy and direction. pySIMTRA extends this functionality by allowing to define custom systems programmatically
-via code but most importantly enables the simulation of co-sputtering experiments through the parallel execution of the
-SIMTRA simulations with multithreading.
+such as energy and direction. ``pySIMTRA`` extends this functionality by allowing to define custom systems
+programmatically via code but most importantly enables the simulation of co-sputtering experiments through the parallel
+execution of the SIMTRA simulations with multithreading.
 
 Documentation
 -------------
