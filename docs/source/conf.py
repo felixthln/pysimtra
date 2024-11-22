@@ -49,5 +49,5 @@ html_theme_options = {
 
 # If True, show link to rst source on rendered HTML pages
 html_show_sourcelink = False  # Remove 'view source code' from top of page
-
-nbsphinx_allow_errors = True
+# Disable the execution of the notebooks as they cannot be run by readthedocs
+nbsphinx_execute = 'never'
