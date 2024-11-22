@@ -47,3 +47,5 @@ html_theme_options = {
 
 # If True, show link to rst source on rendered HTML pages
 html_show_sourcelink = False  # Remove 'view source code' from top of page
+# Hide the label "Built with the PyData Sphinx Theme" on the bottom right of the page
+html_show_sphinx = False
