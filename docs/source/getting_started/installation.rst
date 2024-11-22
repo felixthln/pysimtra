@@ -6,7 +6,7 @@ This section goes through the required steps to get ``pySIMTRA`` running on your
 Acquire the SIMTRA application
 ------------------------------
 
-Since this package is based on SIMTRA, the **SIMTRA** application **needs to be acquired** first (for free) from
+Since this package is based on SIMTRA, the **application needs to be acquired first** (for free) from
 `here <https://www.ugent.be/we/solidstatesciences/draft/en/services/software>`_. Since SIMTRA only runs on Windows
 operating systems, the part of the package running the actual simulation **can only be used on Windows**. However,
 defining, loading and exporting components and sputter systems also works on the other operating systems.

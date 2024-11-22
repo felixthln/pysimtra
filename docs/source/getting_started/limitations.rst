@@ -1,4 +1,4 @@
 Limitations
 ===========
 
-List of all currently not implemented features.
+This section lists all currently not implemented features of the original SIMTRA.

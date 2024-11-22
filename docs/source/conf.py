@@ -26,7 +26,8 @@ release = '1.0.0'
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
 extensions = [
-    'sphinx.ext.autodoc',
+    'nbsphinx',
+    'sphinx.ext.autodoc'
 ]
 
 templates_path = ['_templates']
@@ -40,12 +41,11 @@ html_static_path = ['_static']
 
 # Define the theme options like title
 html_theme_options = {
-    "logo": {
-        "text": "pySIMTRA"
-    }
+    'logo': {
+        'text': 'pySIMTRA'
+    },
+    'github_url': 'https://github.com/felixthln/pysimtra'
 }
 
 # If True, show link to rst source on rendered HTML pages
 html_show_sourcelink = False  # Remove 'view source code' from top of page
-# Hide the label "Built with the PyData Sphinx Theme" on the bottom right of the page
-html_show_sphinx = False
