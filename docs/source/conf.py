@@ -46,5 +46,7 @@ html_theme_options = {
 
 # If True, show link to rst source on rendered HTML pages
 html_show_sourcelink = False  # Remove 'view source code' from top of page
+# Define that the type hints will be shown in the description of the function references rather than in the signature
+autodoc_typehints = 'description'
 # Disable the execution of the notebooks as they cannot be run by readthedocs
 nbsphinx_execute = 'never'
