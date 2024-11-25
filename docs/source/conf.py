@@ -10,6 +10,8 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path('..', 'src').resolve()))
 
+print(sys.path)
+
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
