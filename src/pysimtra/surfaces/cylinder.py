@@ -19,8 +19,6 @@ class Cylinder(Surface):
                  save_ind_data: bool = False, avg_grid: tuple[int] = None):
 
         """
-        Creates the cylinder.
-
         :param name: name of the cylinder
         :param radius: radius of the circle in m
         :param height: height of the rectangle in m
@@ -30,7 +28,7 @@ class Cylinder(Surface):
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
         :param avg_grid: averaging grid size, tuple with number of segments in x and y direction. Ignored if
-        save_avg_data is False
+            save_avg_data is False
         """
 
         # Initialize the superclass

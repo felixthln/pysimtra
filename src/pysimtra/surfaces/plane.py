@@ -24,8 +24,6 @@ class Plane(Surface):
                  save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
 
         """
-        Creates the plane.
-
         :param name: name of the planepiece
         :param position: position (x, y, z) in m
         :param orientation: orientation (phi, theta, psi) in °
@@ -37,7 +35,7 @@ class Plane(Surface):
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
         :param avg_grid: averaging grid size, tuple with number of segments in x and y direction. Ignored if
-        save_avg_data is False
+            save_avg_data is False
         """
 
         # Initialize the superclass
@@ -51,7 +49,7 @@ class Plane(Surface):
         self.outer_param_2 = dtheta if _type in ['circle', 'c'] else dy
 
     @staticmethod
-    def _check(_type: str, radius: float, dtheta: float, dx: float, dy: float, reason: str) -> None:
+    def _check(_type: str, radius: float, dtheta: float, dx: float, dy: float, reason: str):
 
         """
         Performs a type check for defining the plane or the perforating plane and checks if the right combination of
@@ -63,7 +61,6 @@ class Plane(Surface):
         :param dx: half width of the rectangle in m
         :param dy: half height of the rectangle in m
         :param reason: reason for the type check
-        :return:
         """
 
         # Check if the type is correct
@@ -75,7 +72,7 @@ class Plane(Surface):
         if _type in ['rectangle', 'r'] and (dx is None or dy is None):
             raise ValueError('For %s a rectangle, both the dx and dy need to be set.' % reason)
 
-    def perforate(self, by: str, radius: float = None, dtheta: float = 180, dx: float = None, dy: float = None) -> None:
+    def perforate(self, by: str, radius: float = None, dtheta: float = 180, dx: float = None, dy: float = None):
 
         """
         Perforates the plane either by a circle or a rectangle.
@@ -87,7 +84,6 @@ class Plane(Surface):
         perforating with a circle. This needs to be identical to the outer opening angle of the circle
         :param dx: half width of the rectangle in m, required when perforating with a rectangle
         :param dy: half height of the rectangle in m, required when perforating with a rectangle
-        :return:
         """
 
         # Check if the types and input parameters are correct

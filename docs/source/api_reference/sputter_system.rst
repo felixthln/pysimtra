@@ -1,4 +1,4 @@
-Sputter system
+Sputter System
 ==============
 
 API of the sputter system class.

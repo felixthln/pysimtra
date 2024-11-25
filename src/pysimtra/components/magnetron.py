@@ -67,15 +67,13 @@ class Magnetron:
                  source_type: str = 'planarTarget'):
 
         """
-        Creates a magnetron object.
-
         :param transported_element: element to be sputtered
         :param m_object: DummyObject representing the geometry of the magnetron
         :param racetrack_file_path: path to the racetrack file; is used to estimate the position distribution
         :param n_particles: number of particles to simulate, defaults to 10 ** 5
         :param save_every_n_particles: defaults to zero which means the data is only saved after the simulation is done
         :param sputter_surface_index: index of the surface from which to simulate the launch of the sputtered particles,
-        begins at 1
+            begins at 1
         :param racetrack_type: type of the racetrack, either "axialsymmetric", "profilometry" or "rotatable"
         :param racetrack_t0:
         :param racetrack_row_res: row resolution for the racetrack in case "profilometry" is selected as racetrack type
@@ -84,17 +82,17 @@ class Magnetron:
         :param cosine_coefficients: cosine coefficients used when the angular distribution is "User"
         :param energy_distribution: either "Thompson" or "SRIM"
         :param max_ion_energy: maximum ion energy of the sputtered element, only needed when energy distribution is
-        "Thompson"
+            "Thompson"
         :param surface_binding_energy: surface binding energy of the sputtered element
         :param with_gas_motion: whether the transport should be modelled with gas motion
         :param go_to_diffusion: whether the transport should be modelled with diffusion
         :param interaction_potential: either "screenedCoulomb" or "specified"
         :param screening_function: screening function when "screenedCoulomb" is selected as the interaction potential.
-        Either "Moliere", "Kr-C", "Lenz-Jensen" or "ZBL"
+            Either "Moliere", "Kr-C", "Lenz-Jensen" or "ZBL"
         :param scattering_table_path: path to the scattering table
         :param srim_file_path: path to the SRIM file, only used when SRIM is used as angular or energy distribution
         :param srim_type: type of SRIM file, either "sputtered" or "backscattered", only used when SRIM is used as
-        angular or energy distribution
+            angular or energy distribution
         :param source_type: "planarTarget" most often
         """
 

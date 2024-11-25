@@ -7,8 +7,6 @@ class Circle(Plane):
                  dtheta: float = 180, save_avg_data: bool = False, save_ind_data: bool = False,
                  avg_grid: tuple[int, ...] = None):
         """
-        Creates a circle.
-
         :param name: name of the circle
         :param radius: radius of the circle in m
         :param position: position (x, y, z) in m

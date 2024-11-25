@@ -25,9 +25,6 @@ class SputterSystem:
                  dummy_objects: DummyObject | list[DummyObject], output_path: str | Path):
 
         """
-        Creates a single or multi-magnetron sputter system from a chamber, magnetron(s) and objects. For each magnetron,
-        a SIMTRA simulation can be executed.
-
         :param chamber: chamber object
         :param magnetrons: either a single magnetron object or a list of magnetrons
         :param dummy_objects: dummy object or list of dummy objects
@@ -70,7 +67,6 @@ class SputterSystem:
         :param magnetron_paths: Paths to the ".smo" or ".sin" files which define the magnetrons
         :param object_paths: Paths to the ".sdo" files which define the dummy objects
         :param output_path: output path for the simulation results
-        :return:
         """
 
         # Load the chamber
@@ -100,11 +96,11 @@ class SputterSystem:
         distributions of all those objects are returned which have the "save averaged data" attribute.
 
         :param magnetrons: list of magnetron names to simulate. If not given, the deposition from all magnetrons are
-        simulated
+            simulated
         :param n_sim: number of simulations of each magnetron. If n > 1, seed numbers are randomly generated and all
-        simulation results will be combined for each magnetron
+            simulation results will be combined for each magnetron
         :return: either a single SimtraOutput object or a list of SimtraOutput objects for every simulated magnetron
-        containing the simulation results
+            containing the simulation results
         """
 
         # Get a list of all magnetron names in case no list is provided
@@ -152,7 +148,6 @@ class SputterSystem:
 
         :param path: path including a filename and the ".sin" suffix
         :param mag_name: name of the magnetron to save, for a single magnetron system, this parameter has no effect
-        :return:
         """
 
         # Convert the string to a path if necessary

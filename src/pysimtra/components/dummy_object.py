@@ -17,6 +17,14 @@ class DummyObject:
 
     def __init__(self, name: str, surfaces: list[Surface],  position: tuple = (0, 0, 0),
                  orientation: tuple = (0, 0, 0)):
+
+        """
+        :param name: name of the dummy object
+        :param surfaces: list of Surface objects which make up the dummy object
+        :param position: position (x, y, z) in m
+        :param orientation: orientation (phi, theta, psi) in °
+        """
+
         # Store the parameters in the class
         self.name = name
         self.surfaces = surfaces

@@ -7,8 +7,6 @@ class Rectangle(Plane):
                  save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
 
         """
-        Class method for creating a rectangle.
-
         :param name: name of the rectangle
         :param dx: half width of the rectangle in m
         :param dy: half height of the rectangle in m

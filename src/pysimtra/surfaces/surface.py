@@ -19,8 +19,7 @@ class Surface:
     avg_grid: tuple[int, ...] = None
 
     def __init__(self, name: str, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
-                 save_avg_data: bool = False, save_ind_data: bool = False,
-                 avg_grid: tuple[int, ...] = None) -> None:
+                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
         # Store the properties inside the class
         self.name = name
         self.position = position
