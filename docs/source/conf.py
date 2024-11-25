@@ -41,7 +41,8 @@ html_theme_options = {
     'logo': {
         'text': 'pySIMTRA'
     },
-    'github_url': 'https://github.com/felixthln/pysimtra'
+    'github_url': 'https://github.com/felixthln/pysimtra',
+    'back_to_top_button': False
 }
 
 # If True, show link to rst source on rendered HTML pages
