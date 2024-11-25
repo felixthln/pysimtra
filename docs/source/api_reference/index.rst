@@ -7,5 +7,4 @@ Here will be the list of classes and methods.
    sputter_system
    components
 
-.. automodule:: pysimtra
-   :members:
+.. autofunction:: pysimtra.import_exe
