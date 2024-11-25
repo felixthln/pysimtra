@@ -25,4 +25,5 @@ dependencies = [
 ]
 
 [project.urls]
-Home = "https://github.com/felixthln/pysimtra"
+Repository = "https://github.com/felixthln/pysimtra"
+Documentation = "https://pysimtra.readthedocs.io/en/latest/"
