@@ -7,7 +7,5 @@ Here will be the list of classes and methods.
    sputter_system
    components
 
-.. autosummary::
-   :toctree: generated
-
-   pysimtra
+.. automodule:: pysimtra
+   :members:
