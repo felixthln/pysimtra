@@ -10,10 +10,6 @@ import sys
 from pathlib import Path
 sys.path.append(str(Path(__file__).parents[2] / 'src' / 'pysimtra'))
 
-#import os
-#sys.path.insert(0, os.path.abspath('../..'))
-#print(sys.path)
-
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
@@ -27,7 +23,8 @@ release = '1.0.0'
 
 extensions = [
     'nbsphinx',
-    'sphinx.ext.autodoc'
+    'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary'
 ]
 
 templates_path = ['_templates']

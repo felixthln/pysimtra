@@ -11,6 +11,7 @@ authors = [
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
+keywords = ["magnetron sputtering", "monte carlo", "sputter simulation", "SIMTRA"]
 requires-python = ">=3.11"
 classifiers = [
     "Programming Language :: Python",
@@ -20,9 +21,7 @@ classifiers = [
 ]
 dependencies = [
     "numpy>=1.26.0",
-    "pandas>=2.1.1",
-    "notebook>=7.2.0",
-    "matplotlib>=3.8.0"
+    "pandas>=2.1.1"
 ]
 
 [project.urls]
