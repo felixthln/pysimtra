@@ -14,15 +14,18 @@ readme = "README.md"
 keywords = ["magnetron sputtering", "monte carlo", "sputter simulation", "SIMTRA"]
 requires-python = ">=3.11"
 classifiers = [
+    "Intended Audience :: Science/Research",
+    "Natural Language :: English",
     "Programming Language :: Python",
-    "Programming Language :: Python :: 3.11",
-    "License :: OSI Approved :: GNU GPLv3",
-    "Operating System :: Windows",
+    "Operating System :: Microsoft :: Windows",
 ]
 dependencies = [
     "numpy>=1.26.0",
     "pandas>=2.1.1"
 ]
+
+[metadata]
+license_expression = "GPL-3.0-or-later"
 
 [project.urls]
 Repository = "https://github.com/felixthln/pysimtra"
