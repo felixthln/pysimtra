@@ -20,7 +20,7 @@ def import_exe(path: Path | str):
     Imports the SIMTRA executable into the package.
 
     :param path: path to the SIMTRA directory containing the "simtra_cmd.exe" as well as the "ScatteringAngleTables"
-    directory
+        directory
     :return:
     """
 
