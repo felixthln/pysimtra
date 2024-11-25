@@ -48,9 +48,9 @@ html_theme_options = {
 html_show_sourcelink = False  # Remove 'view source code' from top of page
 # Define that the type hints will be shown in the description of the function references rather than in the signature
 autodoc_typehints = 'description'
-#
+# Include the docstring of the __init__ method in the documentation too instead of the class docstring
 autoclass_content = 'init'
-
+# When generating the documentation automatically, generate the order of the method descriptions based on the source
 autodoc_member_order = 'bysource'
 # Disable the execution of the notebooks as they cannot be run by readthedocs
 nbsphinx_execute = 'never'

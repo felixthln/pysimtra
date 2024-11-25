@@ -1,2 +1,4 @@
-.ipynb_checkpoints
+# Hide the idea directory of pycharm
 .idea
+# Never include the SIMTRA executables in the repository
+src/pysimtra/simtra/app
