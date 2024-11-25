@@ -28,8 +28,6 @@ class Chamber:
                  save_individual_data: bool = False):
 
         """
-        Creates a SIMTRA chamber.
-
         :param shape: shape of the chamber, either "cuboid" or "cylinder"
         :param length: length of the chamber in m (z-direction)
         :param temperature: temperature of the chamber in K
@@ -125,13 +123,12 @@ class Chamber:
         else:
             raise ValueError('The given path needs to point to a ".sin" file.')
 
-    def set_seed_number(self, seed: int = None) -> None:
+    def set_seed_number(self, seed: int = None):
 
         """
         Sets the seed number of the class either randomly or to the specified number.
 
         :param seed: seed number between 1 and 10000
-        :return:
         """
 
         self.seed_number = np.random.randint(1, 10000) if seed is None else seed

@@ -50,5 +50,7 @@ html_show_sourcelink = False  # Remove 'view source code' from top of page
 autodoc_typehints = 'description'
 #
 autoclass_content = 'init'
+
+autodoc_member_order = 'bysource'
 # Disable the execution of the notebooks as they cannot be run by readthedocs
 nbsphinx_execute = 'never'
