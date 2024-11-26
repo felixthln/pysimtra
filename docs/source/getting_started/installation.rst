@@ -6,31 +6,42 @@ This section goes through the required steps to get ``pySIMTRA`` running on your
 Acquire the SIMTRA application
 ------------------------------
 
-Since this package is based on SIMTRA, the **application needs to be acquired first** (for free) from
+Since this package is based on SIMTRA, the **application needs to be acquired first** from
 `here <https://www.ugent.be/we/solidstatesciences/draft/en/services/software>`_. Since SIMTRA only runs on Windows
 operating systems, the part of the package running the actual simulation **can only be used on Windows**. However,
 defining, loading and exporting components and sputter systems also works on the other operating systems.
 
-Install the package via pip
----------------------------
+Installation
+------------
 
-The code was developed on Python 3.11. If you want to test the package in a separated environment and you are using
-`Anaconda <https://www.anaconda.com>`_, we recommend to create a new conda environment first via the following command:
+Install via pip:
+~~~~~~~~~~~~~~~~
+
+The most convenient way of installing the package is via `PyPI <https://pypi.org/project/pysimtra/>`_ by simply running:
+
+.. code-block::
+
+   pip install pysimtra
+
+Install via GitHub:
+~~~~~~~~~~~~~~~~~~~
+
+Alternatively, you can install the package from the GitHub directly. If you want to test the package in a separated
+environment and you are using `Anaconda <https://www.anaconda.com>`_, we recommend to create a new conda environment
+first via the following command. The package works with python 3.9 or later and was developed with 3.11.
 
 .. code-block::
 
    conda create -n pysimtra_env python=3.11
 
-Since the code is not yet on pip, the quickest way to get started is to clone the GitHub repository. However, the
-installation requirements were already defined. Therefor, the package can be automatically installed via pip locally.
-Run the following command in the command line to clone the repository:
+Then clone the repository:
 
 .. code-block::
 
    git clone https://github.com/felixthln/pysimtra.git
    cd pysimtra
 
-...and install it with pip:
+...and install automatically via the local pip install command:
 
 .. code-block::
 

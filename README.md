@@ -22,8 +22,9 @@ Solid Films, 520(20), 6337–6354.
 
 ## Installation & Documentation
 
-Instructions in how to install the package, user guides and an API reference can be found 
-[on ReadTheDocs](https://pysimtra.readthedocs.io/en/latest/index.html).
+The package is on pip and can be easily installed via `pip install pysimtra`. More detailed instructions in how to 
+install the package, user guides and an API reference can be found on 
+[ReadTheDocs](https://pysimtra.readthedocs.io/en/latest/index.html).
 
 ## Terms of Use
 
