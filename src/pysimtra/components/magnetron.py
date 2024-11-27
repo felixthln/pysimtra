@@ -13,7 +13,7 @@ class Magnetron:
     # Geometrical representation of the magnetron object
     m_object: DummyObject = None
     # Target parameters
-    transported_element: str = None
+    transported_element: str | None = None
     n_particles: int = None
     save_every_n_particles: int = None
     sputter_surface_index: int = None  # begins at 1
@@ -42,7 +42,7 @@ class Magnetron:
     source_type: str = None
 
     def __init__(self,
-                 transported_element: str,
+                 transported_element: str | None,
                  m_object: DummyObject,
                  racetrack_file_path: str | Path,
                  n_particles: int = 10 ** 5,
@@ -98,11 +98,11 @@ class Magnetron:
 
         # Load the surface binding energies
         e_binding = pd.read_csv(Path(__file__).parents[1] / 'e_binding.csv', index_col=0).iloc[:, 0]
-        # Check if the transported element is in the periodic table
-        if transported_element not in e_binding.index:
+        # Check if the transported element is in the periodic table, allow to specify no element
+        if transported_element is not None and transported_element not in e_binding.index:
             raise ValueError('Transported element %s is not a valid element.' % transported_element)
         # If no surface binding energy is specified, try to load it from the stored ones
-        if surface_binding_energy is None:
+        if transported_element is not None and surface_binding_energy is None:
             surface_binding_energy = e_binding.loc[transported_element]
             # Since the surface binding energy is needed for the simulation, raise an error if none could be found
             if surface_binding_energy is None:
