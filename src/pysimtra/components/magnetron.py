@@ -44,7 +44,7 @@ class Magnetron:
     def __init__(self,
                  transported_element: str | None,
                  m_object: DummyObject,
-                 racetrack_file_path: str | Path,
+                 racetrack_file_path: str | Path | None,
                  n_particles: int = 10 ** 5,
                  save_every_n_particles: int = 0,
                  sputter_surface_index: int = 1,
@@ -110,10 +110,11 @@ class Magnetron:
                                  'specify one by setting "surface_binding_energy" parameter explicitly.' %
                                  transported_element)
         # Convert the racetrack path to a pathlib object
-        if isinstance(racetrack_file_path, str):
-            racetrack_file_path = Path(racetrack_file_path)
-        # In case the user works with relative file paths, resolve the path
-        racetrack_file_path = racetrack_file_path.resolve()
+        if racetrack_file_path is not None:
+            if isinstance(racetrack_file_path, str):
+                racetrack_file_path = Path(racetrack_file_path)
+            # In case the user works with relative file paths, resolve the path
+            racetrack_file_path = racetrack_file_path.resolve()
         # Store the parameters in the class
         self.transported_element = transported_element
         self.m_object = m_object
