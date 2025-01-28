@@ -37,7 +37,7 @@ class SimtraSimulation:
             exe_path = Path(__file__).parent / Path('app/simtra_cmd.exe')
         # Check if the SIMTRA command file is there
         if not exe_path.exists():
-            raise ValueError('The "simtra_cmd.exe" could\'nt. Use "import_exe" method to import into the package.')
+            raise ValueError('The "simtra_cmd.exe" was not found. Use "import_exe" method to it')
         # If the exe path is a string, convert it to a pathlib.Path object
         self._exe_path = Path(exe_path) if isinstance(exe_path, str) else exe_path
 
