@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pysimtra"
-version = "1.0.1"
+version = "1.0.2"
 description = "A package for simulating the transport of sputtered atoms for multiple magnetrons in parallel."
 authors = [
     { name = "Felix Thelen", email = "felix.thelen@ruhr-uni-bochum.de" }
