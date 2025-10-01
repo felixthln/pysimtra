@@ -1,5 +1,6 @@
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import timedelta  # datetime,
+from dateutil import parser
 from typing import Any, Callable
 import pandas as pd
 import numpy as np
@@ -60,7 +61,8 @@ class SimtraOutput:
             n_seconds = ((int(d) * 12 + int(h)) * 60 + int(m)) * 60 + int(s)
             metadata['simulation time [s]'] = n_seconds
             # Get the start time
-            start_time = datetime.strptime(lines[3].rstrip().split(': ')[1], '%d/%m/%Y %H:%M:%S')
+            start_time = parser.parse(lines[3].rstrip().split(': ')[1])
+            #start_time = datetime.strptime(lines[3].rstrip().split(': ')[1], '%d/%m/%Y %H:%M:%S')
             metadata['start time'] = start_time
             # Calculate the finish time based on the start time and the simulation time
             metadata['finish time'] = start_time + timedelta(seconds=n_seconds)
