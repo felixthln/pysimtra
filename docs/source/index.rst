@@ -13,7 +13,7 @@ execution of the SIMTRA simulations with multithreading.
 The package is part of a scientific publication *A Python-Based Approach to Sputter Deposition Simulations in
 Combinatorial Materials Science* which can be found here:
 
-    Arxiv: https://doi.org/10.48550/arXiv.2411.14413
+    Surface and Coatings Technology: https://doi.org/10.1016/j.surfcoat.2025.131998
 
 Documentation
 -------------

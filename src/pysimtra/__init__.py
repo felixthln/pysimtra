@@ -6,6 +6,8 @@ from .surfaces import Circle, Rectangle, Cylinder, Cone, Sphere
 from .components import Chamber, Magnetron, DummyObject
 # Import the sputter system class
 from .sputter_system import SputterSystem
+# Import the SIMTRA simulation class
+from .simtra import SimtraSimulation
 # Import the SimtraOutput class
 from .simtra import SimtraOutput
 # Import the functions for reading and writing SIMTRA files
