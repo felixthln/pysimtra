@@ -28,9 +28,6 @@ class SimtraSimulation:
     Class for running one or multiple SIMTRA simulations.
     """
 
-    # Path to the simtra executable which actually handles the simulation
-    _exe_path: Path = None
-
     def __init__(self, exe_path: Path | str = None):
         # If no path is provided, use the standard one
         if exe_path is None:

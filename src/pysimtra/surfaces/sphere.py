@@ -7,13 +7,6 @@ class Sphere(Surface):
     Class for describing a SIMTRA sphere.
     """
 
-    # Internal SIMTRA representation
-    simtra_type: str = 'spherepiece'
-    # Specific parameters of the sphere
-    radius: float = None  # in m
-    dphi: float = None  # in °
-    dtheta: float = None  # in °
-
     def __init__(self, name: str, radius: float, dphi: float = 180, position: tuple = (0, 0, 0),
                  orientation: tuple = (0, 0, 0), dtheta: float = 180, save_avg_data: bool = False,
                  save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
@@ -33,7 +26,9 @@ class Sphere(Surface):
 
         # Initialize the superclass
         super().__init__(name, position, orientation, save_avg_data, save_ind_data, avg_grid)
+        # Internal SIMTRA representation
+        self.simtra_type: str = 'spherepiece'
         # Store the specific parameters inside the class
-        self.radius = radius
-        self.dphi = dphi
-        self.dtheta = dtheta
+        self.radius = radius  # in m
+        self.dphi = dphi  # in °
+        self.dtheta = dtheta  # in °

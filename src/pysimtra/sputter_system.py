@@ -13,14 +13,6 @@ class SputterSystem:
     Class for describing a sputter system with n cathodes.
     """
 
-    _simtra_sim: SimtraSimulation = None
-    _temp_dir_path: Path = Path(__file__).parents[0] / 'temporary'
-
-    chamber: Chamber = None
-    magnetrons: list[Magnetron] = None
-    dummy_objects: list[DummyObject] = None
-    output_path: Path = None
-
     def __init__(self, chamber: Chamber, magnetrons: Magnetron | list[Magnetron],
                  dummy_objects: DummyObject | list[DummyObject], output_path: str | Path):
 
@@ -31,6 +23,8 @@ class SputterSystem:
         :param output_path: path pointing to a directory at which the simulation results will be stored
         """
 
+        # Define the temporary directory path
+        self._temp_dir_path: Path = Path(__file__).parents[0] / 'temporary'
         # If a single magnetron was provided, wrap it in a dictionary with its name as a key
         self.magnetrons = [magnetrons] if isinstance(magnetrons, Magnetron) else magnetrons
         # Assign the rest of the components to the class
@@ -38,7 +32,7 @@ class SputterSystem:
         self.dummy_objects = [dummy_objects] if isinstance(dummy_objects, DummyObject) else dummy_objects
         # Convert the string to a path if necessary
         self.output_path = Path(output_path) if isinstance(output_path, str) else output_path
-        # Define the simulation object, by default, the path to the internal Simtra executable will be used
+        # Define the simulation object; by default, the path to the internal Simtra executable will be used
         self._simtra_sim = SimtraSimulation()
 
     @classmethod

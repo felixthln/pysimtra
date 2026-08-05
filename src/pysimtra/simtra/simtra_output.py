@@ -14,29 +14,20 @@ class SimtraOutput:
     Class for handling the Simtra outputs.
     """
 
-    metadata: dict[str, Any] | list[dict[str, Any]] = None
-    n_particles: dict[str, np.ndarray] = None
-    e_incidence: dict[str, np.ndarray] = None
-    l_path: dict[str, np.ndarray] = None
-    t_flight: dict[str, np.ndarray] = None
-    n_collisions: dict[str, np.ndarray] = None
-    ang_incidence: dict[str, np.ndarray] = None
-    ang_scatter: dict[str, np.ndarray] = None
-
     def __init__(self, metadata: dict[str, Any] | list[dict[str, Any]], n_particles: dict[str, np.ndarray] = None,
                  e_incidence: dict[str, np.ndarray] = None, l_path: dict[str, np.ndarray] = None,
                  t_flight: dict[str, np.ndarray] = None, n_collisions: dict[str, np.ndarray] = None,
                  ang_incidence: dict[str, np.ndarray] = None, ang_scatter: dict[str, np.ndarray] = None):
 
         # Save all data inside the class
-        self.metadata = {} if metadata is None else metadata
-        self.n_particles = {} if n_particles is None else n_particles
-        self.e_incidence = {} if e_incidence is None else e_incidence
-        self.l_path = {} if l_path is None else l_path
-        self.t_flight = {} if t_flight is None else t_flight
-        self.n_collisions = {} if n_collisions is None else n_collisions
-        self.ang_incidence = {} if ang_incidence is None else ang_incidence
-        self.ang_scatter = {} if ang_scatter is None else ang_scatter
+        self.metadata: dict[str, Any] | list[dict[str, Any]] = {} if metadata is None else metadata
+        self.n_particles: dict[str, np.ndarray] = {} if n_particles is None else n_particles
+        self.e_incidence: dict[str, np.ndarray] = {} if e_incidence is None else e_incidence
+        self.l_path: dict[str, np.ndarray] = {} if l_path is None else l_path
+        self.t_flight: dict[str, np.ndarray] = {} if t_flight is None else t_flight
+        self.n_collisions: dict[str, np.ndarray] = {} if n_collisions is None else n_collisions
+        self.ang_incidence: dict[str, np.ndarray] = {} if ang_incidence is None else ang_incidence
+        self.ang_scatter: dict[str, np.ndarray] = {} if ang_scatter is None else ang_scatter
 
     @staticmethod
     def load_metadata(output_path: Path) -> dict[str, Any]:

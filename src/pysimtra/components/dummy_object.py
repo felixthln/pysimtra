@@ -9,12 +9,6 @@ class DummyObject:
     Class for describing a SIMTRA dummy object.
     """
 
-    # Parameters defining the object
-    name: str = None
-    surfaces: list[Surface] = None
-    position: tuple = None  # (x, y, z) in m
-    orientation: tuple = None  # (phi, theta, psi) in °
-
     def __init__(self, name: str, surfaces: list[Surface],  position: tuple = (0, 0, 0),
                  orientation: tuple = (0, 0, 0)):
 
@@ -26,10 +20,10 @@ class DummyObject:
         """
 
         # Store the parameters in the class
-        self.name = name
-        self.surfaces = surfaces
-        self.position = position
-        self.orientation = orientation
+        self.name: str  = name
+        self.surfaces: list[Surface] = surfaces
+        self.position: tuple = position  # (x, y, z) in m
+        self.orientation: tuple = orientation  # (phi, theta, psi) in °
 
     @classmethod
     def from_file(cls, path: Path | str):

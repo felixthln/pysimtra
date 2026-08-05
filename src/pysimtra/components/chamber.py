@@ -8,20 +8,6 @@ class Chamber:
     Class for describing a SIMTRA sputter chamber.
     """
 
-    # Chamber parameters
-    shape: str = None  # either "cuboid" or "cylinder"
-    length: float = None  # length of the chamber in m
-    radius: float = None  # radius in m, only used when shape = "cylinder"
-    height: float = None  # height in m, only used when shape = "cuboid"
-    width: float = None  # width in m, only used when shape = "cuboid"
-    temperature: float = None  # in Kelvin
-    pressure: float = None  # in Pa
-    gas_element: str = None  # noble gas
-    seed_number: int = None
-    chamber_walls_grid: tuple = None  # (N_x, N_y, N_z, N_theta), x, y, z for shape = "cuboid", z, theta for "cylinder"
-    save_deposition_walls: list[int] = None
-    save_individual_data: bool = None
-
     def __init__(self, shape: str, length: float, temperature: float, pressure: float, gas_element: str,
                  radius: float = None, height: float = None, width: float = None, seed_number: int = None,
                  chamber_walls_grid: tuple = (10, 10, 10, 180), save_deposition_walls: list[int] = None,
@@ -46,18 +32,18 @@ class Chamber:
         if gas_element not in ['He', 'Ne', 'Ar', 'Kr', 'Xe', 'Rn']:
             raise ValueError('The selected gas element is not a noble gas.')
         # Store the parameters
-        self.shape = shape
-        self.radius = radius
-        self.height = height
-        self.width = width
-        self.length = length
-        self.temperature = temperature
-        self.pressure = pressure
-        self.gas_element = gas_element
+        self.shape = shape  # either "cuboid" or "cylinder"
+        self.radius = radius  # radius in m, only used when shape = "cylinder"
+        self.height = height  # height in m, only used when shape = "cuboid"
+        self.width = width  # width in m, only used when shape = "cuboid"
+        self.length = length  # length of the chamber in m
+        self.temperature = temperature  # in Kelvin
+        self.pressure = pressure  # in Pa
+        self.gas_element = gas_element  # noble gas
         # Set the seed number
         self.set_seed_number(seed_number)
         # Set the default values for the deposition parameters if not defined
-        self.chamber_walls_grid = chamber_walls_grid
+        self.chamber_walls_grid = chamber_walls_grid  # (N_x, N_y, N_z, N_theta), x, y, z for shape = "cuboid", z, theta for "cylinder"
         self.save_deposition_walls = [] if save_deposition_walls is None else save_deposition_walls
         self.save_individual_data = save_individual_data
 

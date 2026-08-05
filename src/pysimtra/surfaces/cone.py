@@ -7,14 +7,6 @@ class Cone(Surface):
     Class for describing a SIMTRA cone.
     """
 
-    # Internal SIMTRA representation
-    simtra_type: str = 'conepiece'
-    # Specific parameters of the sphere
-    small_rho: float = None  # in m
-    big_rho: float = None  # in m
-    height: float = None  # in m
-    dtheta: float = None  # in °
-
     def __init__(self, name: str, small_rho: float, big_rho: float, height: float, position: tuple = (0, 0, 0),
                  orientation: tuple = (0, 0, 0), dtheta: float = 180, save_avg_data: bool = False,
                  save_ind_data: bool = False, avg_grid: tuple[int] = None):
@@ -35,8 +27,11 @@ class Cone(Surface):
 
         # Initialize the superclass
         super().__init__(name, position, orientation, save_avg_data, save_ind_data, avg_grid)
+        # Internal SIMTRA representation
+        self.simtra_type: str = 'conepiece'
+
         # Store the specific parameters inside the class
-        self.small_rho = small_rho
-        self.big_rho = big_rho
-        self.height = height
-        self.dtheta = dtheta
+        self.small_rho: float = small_rho  # in m
+        self.big_rho: float = big_rho  # in m
+        self.height: float = height  # in m
+        self.dtheta: float = dtheta  # in °

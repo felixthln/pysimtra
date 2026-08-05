@@ -8,17 +8,6 @@ class Plane(Surface):
     those.
     """
 
-    # Internal SIMTRA representation
-    simtra_type: str = 'planepiece'
-    # Type specifying whether the plane is a circle or rectangle
-    plane_type: str = None  # either "circle" or "rectangle"
-    perforation_type: str = None  # either "circle" or "rectangle"
-    # Inner and outer parameters of the planepiece
-    outer_param_1: float = None  # either radius (m) or width (m)
-    outer_param_2: float = None  # either dtheta (°) or height (m)
-    inner_param_1: float = None  # either radius (m) or width (m)
-    inner_param_2: float = None  # either dtheta (°) or height (m)
-
     def __init__(self, name: str, _type: str, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
                  radius: float = None, dtheta: float = 180, dx: float = None, dy: float = None,
                  save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
@@ -40,13 +29,20 @@ class Plane(Surface):
 
         # Initialize the superclass
         super().__init__(name, position, orientation, save_avg_data, save_ind_data, avg_grid)
+        # Internal SIMTRA representation
+        self.simtra_type: str = 'planepiece'
+        # Set the perforation type for later
+        self.perforation_type: str = None  # either "circle" or "rectangle"
         # Check if the types and input parameters are correct
         self._check(_type, radius, dtheta, dx, dy, reason='creating')
         # Store the type of the plane, replace the short versions with the long ones
-        self.plane_type = 'rectangle' if _type == 'r' else 'circle' if _type == 'c' else _type
+        self.plane_type = 'rectangle' if _type == 'r' else 'circle' if _type == 'c' else _type   # either "circle" or "rectangle"
         # Store the specific parameters inside the class
-        self.outer_param_1 = radius if _type in ['circle', 'c'] else dx
-        self.outer_param_2 = dtheta if _type in ['circle', 'c'] else dy
+        self.outer_param_1 = radius if _type in ['circle', 'c'] else dx  # either radius (m) or width (m)
+        self.outer_param_2 = dtheta if _type in ['circle', 'c'] else dy  # either dtheta (°) or height (m)
+        # The inner parameters are set with the perforate function
+        self.inner_param_1: float = None  # either radius (m) or width (m)
+        self.inner_param_2: float = None  # either dtheta (°) or height (m)
 
     @staticmethod
     def _check(_type: str, radius: float, dtheta: float, dx: float, dy: float, reason: str):

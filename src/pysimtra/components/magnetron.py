@@ -10,37 +10,6 @@ class Magnetron:
     Class for describing a SIMTRA magnetron.
     """
 
-    # Geometrical representation of the magnetron object
-    m_object: DummyObject = None
-    # Target parameters
-    transported_element: str | None = None
-    n_particles: int = None
-    save_every_n_particles: int = None
-    sputter_surface_index: int = None  # begins at 1
-    racetrack_file_path: Path = None
-    racetrack_type: str = None
-    racetrack_t0: int = None
-    racetrack_row_res: int = None  # in m
-    racetrack_col_res: int = None  # in m
-    # Transport parameters
-    # Angular distribution
-    angular_distribution: str = None
-    cosine_coefficients: tuple[float, ...] = None
-    srim_type: str = None
-    srim_file_path: str = None
-    # Transport description
-    with_gas_motion: bool = None
-    go_to_diffusion: bool = None
-    interaction_potential: str = None
-    screening_function: str = None
-    scattering_table_path: str = None
-    # Energy distribution
-    energy_distribution: str = None
-    surface_binding_energy: float = None
-    max_ion_energy: float = None
-    # Source type
-    source_type: str = None
-
     def __init__(self,
                  transported_element: str | None,
                  m_object: DummyObject,
@@ -101,10 +70,10 @@ class Magnetron:
         # Check if the transported element is in the periodic table, allow to specify no element
         if transported_element is not None and transported_element not in e_binding.index:
             raise ValueError('Transported element %s is not a valid element.' % transported_element)
-        # If no surface binding energy is specified, try to load it from the stored ones
+        # If no surface-binding energy is specified, try to load it from the stored ones
         if transported_element is not None and surface_binding_energy is None:
             surface_binding_energy = e_binding.loc[transported_element]
-            # Since the surface binding energy is needed for the simulation, raise an error if none could be found
+            # Since the surface-binding energy is needed for the simulation, raise an error if none could be found
             if surface_binding_energy is None:
                 raise ValueError('For the transported element %s no surface binding energy could be found. Please '
                                  'specify one by setting "surface_binding_energy" parameter explicitly.' %
@@ -116,29 +85,29 @@ class Magnetron:
             # In case the user works with relative file paths, resolve the path
             racetrack_file_path = racetrack_file_path.resolve()
         # Store the parameters in the class
-        self.transported_element = transported_element
-        self.m_object = m_object
-        self.racetrack_file_path = racetrack_file_path
-        self.n_particles = n_particles
-        self.save_every_n_particles = save_every_n_particles
-        self.sputter_surface_index = sputter_surface_index
-        self.racetrack_type = racetrack_type
-        self.racetrack_t0 = racetrack_t0
-        self.racetrack_row_res = racetrack_row_res
-        self.racetrack_col_res = racetrack_col_res
-        self.angular_distribution = angular_distribution
-        self.cosine_coefficients = cosine_coefficients
-        self.energy_distribution = energy_distribution
-        self.max_ion_energy = max_ion_energy
-        self.surface_binding_energy = surface_binding_energy
-        self.with_gas_motion = with_gas_motion
-        self.go_to_diffusion = go_to_diffusion
-        self.interaction_potential = interaction_potential
-        self.screening_function = screening_function
-        self.scattering_table_path = scattering_table_path
-        self.srim_file_path = srim_file_path
-        self.srim_type = srim_type
-        self.source_type = source_type
+        self.transported_element: str | None = transported_element
+        self.m_object: DummyObject = m_object
+        self.racetrack_file_path: Path = racetrack_file_path
+        self.n_particles: int = n_particles
+        self.save_every_n_particles: int = save_every_n_particles
+        self.sputter_surface_index: int = sputter_surface_index  # begins at 1
+        self.racetrack_type: str = racetrack_type
+        self.racetrack_t0: int = racetrack_t0
+        self.racetrack_row_res: int = racetrack_row_res
+        self.racetrack_col_res: int = racetrack_col_res
+        self.angular_distribution: str = angular_distribution
+        self.cosine_coefficients: tuple[float, ...] = cosine_coefficients
+        self.energy_distribution: str = energy_distribution
+        self.max_ion_energy: float = max_ion_energy
+        self.surface_binding_energy: float = surface_binding_energy
+        self.with_gas_motion: bool = with_gas_motion
+        self.go_to_diffusion: bool = go_to_diffusion
+        self.interaction_potential: str = interaction_potential
+        self.screening_function: str = screening_function
+        self.scattering_table_path: str = scattering_table_path
+        self.srim_file_path: str = srim_file_path
+        self.srim_type: str = srim_type
+        self.source_type: str = source_type
 
     @classmethod
     def from_file(cls, path: str | Path):

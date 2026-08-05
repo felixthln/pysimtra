@@ -2,3 +2,6 @@
 .idea
 # Never include the SIMTRA executables in the repository
 src/pysimtra/simtra/app
+# Don't include local builds and distributions
+build
+dist
