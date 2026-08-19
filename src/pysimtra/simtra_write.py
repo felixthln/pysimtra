@@ -3,13 +3,14 @@ from pathlib import Path
 
 from .surfaces import Surface, Plane, Circle, Rectangle, Cylinder, Cone, Sphere
 from .components import Chamber, Magnetron, DummyObject
+from .transforms import R_z, R_y, local_basis
 
 
 # :- Private supporting functions
 
-
 # Function to write a single key/value pair to a text file
 def write(key: str, value, file, unit: str = None):
+
     # Convert the value to a string and add the key with a fixed length of 30 characters
     string = '{:<30}'.format(key) + str(value)
     # Add a unit if specified
@@ -21,6 +22,7 @@ def write(key: str, value, file, unit: str = None):
 
 # Function to save all chamber parameters
 def write_chamber(ch: Chamber, file):
+
     # Insert the spacer for the chamber parameters
     file.write('\'chamber   ---------------------------------------\n\n')
     # Add the type of the chamber
@@ -46,34 +48,11 @@ def write_chamber(ch: Chamber, file):
     file.write('\'-------------------------------------------------\n\n')
 
 
-# Generate a rotation matrix around z
-def R_z(angle: float) -> np.ndarray:
-    # Convert the angle from degrees in radians
-    angle = angle / 180 * np.pi
-    # Return the z rotation matrix
-    return np.array([[np.cos(angle), -np.sin(angle), 0], [np.sin(angle), np.cos(angle), 0], [0, 0, 1]])
-
-
-# Generate a rotation matrix around y
-def R_y(angle: float) -> np.ndarray:
-    # Convert the angle from degrees in radians
-    angle = angle / 180 * np.pi
-    # Return the y rotation matrix
-    return np.array([[np.cos(angle), 0, np.sin(angle)], [0, 1, 0], [-np.sin(angle), 0, np.cos(angle)]])
-
-
 # Calculate the rotation matrix of a surface
 def calc_R(sur: Surface) -> np.ndarray:
-    # Extract the angles from the dictionary
-    phi, theta, psi = sur.orientation
-    # Calculate the rotation matrix for the zyz convention
-    rot_mat = R_z(psi) @ R_y(theta) @ R_z(phi)
-    # Round the rotation matrix to E-15
-    rot_mat = np.around(rot_mat, decimals=15)
-    # Calculate a, b and c
-    a = rot_mat.dot([1, 0, 0])
-    b = rot_mat.dot([0, 1, 0])
-    c = np.cross(a, b)
+
+    # Calculate the basis vectors a, b and c belonging to the orientation of the surface
+    a, b, c = local_basis(sur.orientation)
     # The first row of the rotation matrix corresponds to the position
     r1 = np.array(sur.position)
     # The second and third also need to hold the individual surface parameters depending on the type
@@ -103,6 +82,7 @@ def calc_R(sur: Surface) -> np.ndarray:
 
 # Function to save the parameters of a simtra surface to the simtra input file
 def write_surface(sur: Surface, file):
+
     # First store the type and name of the object
     file.write('{:<30}'.format(sur.simtra_type) + sur.name + '\n')
     # Calculate the rotation matrix of the surface
@@ -111,15 +91,15 @@ def write_surface(sur: Surface, file):
     file.write(' '.join('%g' % s for s in np.ravel(R[0])) + '\n')
     file.write(' '.join('%g' % s for s in np.ravel(R[1])) + '\n')
     file.write(' '.join('%g' % s for s in np.ravel(R[2])) + '\n')
-    # Add the shape dependent parameters
+    # Add the shape-dependent parameters
     if isinstance(sur, Circle) or isinstance(sur, Rectangle) or isinstance(sur, Plane):
         # Store the type of the planepiece
         p1 = 1 if sur.plane_type == 'rectangle' else 2
         # Store whether (and by what) the planepiece is perforated
         p2 = 0 if sur.perforation_type is None else 1 if sur.perforation_type == 'rectangle' else 2
-        # Store the shape dependent parameters of the outer shape
+        # Store the shape-dependent parameters of the outer shape
         p3, p4 = sur.outer_param_1, sur.outer_param_2
-        # Store the shape dependent parameters of the inner shape
+        # Store the shape-dependent parameters of the inner shape
         p5 = 0 if sur.perforation_type is None else sur.inner_param_1
         p6 = 0 if sur.perforation_type is None else sur.inner_param_2
         # Write the parameters to the file
@@ -149,6 +129,7 @@ def write_surface(sur: Surface, file):
 
 # Function to save the parameters of a simtra object
 def write_object(obj: DummyObject, _type: str, file):
+
     # First store the type and name of the object
     file.write('{:<30}'.format(_type) + obj.name + ' {\n')
     # Store the global position and orientation of the object
@@ -164,6 +145,7 @@ def write_object(obj: DummyObject, _type: str, file):
 
 
 def write_magnetron(mag: Magnetron, file):
+
     # Store the transported element
     write('transportedElement', mag.transported_element, file)
     # Store the potential

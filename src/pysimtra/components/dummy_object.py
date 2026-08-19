@@ -53,6 +53,24 @@ class DummyObject:
         # In any other case, return an error
         return NotImplemented
 
+    # :- Plotting functions
+
+    def plot(self, ax=None, **kwargs):
+
+        """
+        Draws the dummy object as a 3D wireframe model. Useful for checking a component on its own before adding it to
+        a sputter system. Requires matplotlib to be installed.
+
+        :param ax: matplotlib 3D axes to draw on. If not given, a new figure and axes are created
+        :param kwargs: further keyword arguments passed on to "pysimtra.plotting.plot_object". Of those, "sputter_up"
+            is set to False to display the object upside down, further ones are e.g. "color" or "label"
+        :return: the matplotlib axes the object was drawn on
+        """
+
+        # Import the method here to avoid circular imports
+        from ..plotting import plot_object
+        return plot_object(self, ax=ax, **kwargs)
+
     # :- Conversion functions
 
     def to_sdo(self, path: str | Path) -> None:

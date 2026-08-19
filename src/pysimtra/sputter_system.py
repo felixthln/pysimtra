@@ -134,6 +134,28 @@ class SputterSystem:
         # sputter system
         return results if len(self.magnetrons) > 1 else results[0]
 
+    def plot(self, magnetrons: list[str] | None = None, ax=None, **kwargs):
+
+        """
+        Draws the sputter system as a 3D wireframe model, mimicking the display of the SIMTRA graphical user interface.
+        In contrast to the GUI, all magnetrons of a multi-cathode system are displayed at once.
+
+        :param magnetrons: list of magnetron names to display. If not given, all magnetrons are displayed
+        :param ax: matplotlib 3D axes to draw on. If not given, a new figure and axes are created
+        :param kwargs: further keyword arguments passed on to "pysimtra.plotting.plot_system". Of those, "sputter_up"
+            is set to False to display a chamber whose magnetrons sputter downwards, further ones are e.g. "colors" or
+            "n_points"
+        :return: the matplotlib axes the system was drawn on
+        """
+
+        # Import the method here to avoid circular imports
+        from .plotting import plot_system
+        # Get all magnetrons based on the list of names, identical to the "simulate" method
+        magnetrons = [m.name for m in self.magnetrons] if not magnetrons else magnetrons
+        mags = [m for name in magnetrons for m in self.magnetrons if m.name == name]
+        # Draw the chamber together with the magnetrons and the dummy objects
+        return plot_system(self.chamber, mags, self.dummy_objects, ax=ax, **kwargs)
+
     def to_sin(self, path: str | Path, mag_name: str = None):
 
         """

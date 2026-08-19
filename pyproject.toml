@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pysimtra"
-version = "1.0.4"
+version = "1.0.5"
 description = "A package for simulating the transport of sputtered atoms for multiple magnetrons in parallel."
 authors = [
     { name = "Felix Thelen", email = "felix.thelen@ruhr-uni-bochum.de" }
@@ -26,7 +26,8 @@ classifiers = [
 ]
 dependencies = [
     "numpy >= 1.26.0",
-    "pandas >= 2.1.1"
+    "pandas >= 2.1.1",
+    "matplotlib >= 3.8.0"
 ]
 
 [metadata]

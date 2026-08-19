@@ -148,6 +148,26 @@ class Magnetron:
         # In any other case, return an error
         return NotImplemented
 
+    # :- Plotting functions
+
+    def plot(self, ax=None, **kwargs):
+
+        """
+        Draws the magnetron as a 3D wireframe model, highlighting the surface the particles are launched from. Requires
+        matplotlib to be installed.
+
+        :param ax: matplotlib 3D axes to draw on. If not given, a new figure and axes are created
+        :param kwargs: further keyword arguments passed on to "pysimtra.plotting.plot_object". Of those, "sputter_up"
+            is set to False to display a magnetron which sputters downwards, further ones are e.g. "color"
+        :return: the matplotlib axes the magnetron was drawn on
+        """
+
+        # Import the method here to avoid circular imports
+        from ..plotting import plot_object, DEFAULT_COLORS
+        # Draw the geometry of the magnetron and mark the sputtering surface
+        kwargs.setdefault('color', DEFAULT_COLORS['magnetron'])
+        return plot_object(self.m_object, ax=ax, highlight_index=self.sputter_surface_index, **kwargs)
+
     # :- Conversion functions
 
     def to_smo(self, path: str | Path) -> None:
