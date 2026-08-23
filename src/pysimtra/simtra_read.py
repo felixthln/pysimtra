@@ -47,33 +47,34 @@ def calc_rot_mat(shape_type: str, mat: np.array) -> np.array:
 # Calculate the used euler angles from a 4d rotation matrix
 def calc_angles(rot_mat: np.array) -> np.array:
 
-    # SIMTRA composes the orientation as R = R_z(psi) @ R_y(theta) @ R_z(phi), see "calc_R" in "simtra_write.py". Note
-    # that "calc_rot_mat" returns the basis vectors a, b and c as the ROWS of the matrix, so the matrix handled here is
-    # the transpose of R. Inverting the composition above therefore gives:
-    #   theta = arccos(R[2, 2])      = arccos(rot_mat[2, 2])
-    #   psi   = atan2(R[1, 2], R[0, 2])  = atan2(rot_mat[2, 1], rot_mat[2, 0])
-    #   phi   = atan2(R[2, 1], -R[2, 0]) = atan2(rot_mat[1, 2], -rot_mat[0, 2])
+    # SIMTRA composes the orientation as R = R_z(phi) @ R_y(theta) @ R_z(psi), see "rotation_matrix" in "transforms.py",
+    # so phi is the outer rotation. Note that "calc_rot_mat" returns the basis vectors a, b and c as the ROWS of the
+    # matrix, so the matrix handled here is the transpose of R. Inverting the composition above therefore gives:
+    #   theta = arccos(R[2, 2])          = arccos(rot_mat[2, 2])
+    #   phi   = atan2(R[1, 2], R[0, 2])  = atan2(rot_mat[2, 1], rot_mat[2, 0])
+    #   psi   = atan2(R[2, 1], -R[2, 0]) = atan2(rot_mat[1, 2], -rot_mat[0, 2])
     # First handle the normal case
     if np.abs(rot_mat[2, 2]) < 0.9999999:
 
         # Calculate the angles, dividing by sin(theta) which is positive since theta comes from arccos
         theta = np.arccos(rot_mat[2, 2])
-        phi = np.arctan2(rot_mat[1, 2] / np.sin(theta), - rot_mat[0, 2] / np.sin(theta))
-        psi = np.arctan2(rot_mat[2, 1] / np.sin(theta), rot_mat[2, 0] / np.sin(theta))
+        phi = np.arctan2(rot_mat[2, 1] / np.sin(theta), rot_mat[2, 0] / np.sin(theta))
+        psi = np.arctan2(rot_mat[1, 2] / np.sin(theta), - rot_mat[0, 2] / np.sin(theta))
         # Convert the angles and return them
         return np.around(np.array([phi, theta, psi]) / np.pi * 180, 3)
 
     else:
         # For theta = 0 or 180° the rotation only depends on the sum resp. the difference of phi and psi (gimbal lock),
-        # so phi is fixed to zero and the whole rotation is expressed by psi
-        phi = 0
+        # so psi is fixed to zero and the whole rotation is expressed by phi. Note that the original SIMTRA
+        # implementation returns the negated angle for theta = 0, which is a bug on its side and is not reproduced here
+        psi = 0
         if rot_mat[2, 2] >= 0.9999999:
             # Also set theta to zero
             theta = 0
-            psi = np.arctan2(- rot_mat[1, 0], rot_mat[0, 0])
+            phi = np.arctan2(- rot_mat[1, 0], rot_mat[0, 0])
         else:
             theta = np.pi
-            psi = np.arctan2(- rot_mat[1, 0], rot_mat[1, 1])
+            phi = np.arctan2(- rot_mat[1, 0], rot_mat[1, 1])
 
         # Convert the angles and return them
         return np.around(np.array([phi, theta, psi]) / np.pi * 180, 3)

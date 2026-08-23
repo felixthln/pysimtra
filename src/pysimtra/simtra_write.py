@@ -3,7 +3,7 @@ from pathlib import Path
 
 from .surfaces import Surface, Plane, Circle, Rectangle, Cylinder, Cone, Sphere
 from .components import Chamber, Magnetron, DummyObject
-from .transforms import R_z, R_y, local_basis
+from .transforms import local_basis
 
 
 # :- Private supporting functions

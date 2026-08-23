@@ -28,9 +28,16 @@ def R_y(angle: float) -> np.ndarray:
 def rotation_matrix(orientation: tuple) -> np.ndarray:
 
     """
-    Calculates the rotation matrix belonging to a set of Euler angles. SIMTRA uses the ZYZ convention, meaning the
-    rotation is composed as R_z(psi) @ R_y(theta) @ R_z(phi). This function is the single definition of that
+    Calculates the rotation matrix belonging to a set of Euler angles. SIMTRA uses the ZYZ convention and stores the
+    three angles in the order (phi, theta, psi), where phi is the OUTER rotation, i.e. the one applied last. The
+    rotation is therefore composed as R_z(phi) @ R_y(theta) @ R_z(psi). This function is the single definition of that
     convention, "calc_angles" in "simtra_read.py" inverts it.
+
+    The order matters for the object orientations in particular: unlike a surface, whose orientation is converted into
+    basis vectors before it is written, an object orientation is written into the input file as the three angles
+    themselves and is therefore interpreted by SIMTRA rather than by this package. A magnetron sitting at the azimuth
+    alpha of an anker circle and leaning towards the chamber axis needs R_z(alpha) @ R_y(-tilt), so the azimuth has to
+    end up in phi. Putting it into psi instead tilts every magnetron towards -x regardless of where it sits.
 
     :param orientation: orientation (phi, theta, psi) in °
     :return: 3x3 rotation matrix converting from the local into the surrounding coordinate system
@@ -39,7 +46,7 @@ def rotation_matrix(orientation: tuple) -> np.ndarray:
     # Extract the three angles
     phi, theta, psi = orientation
     # Compose the rotation and round it to E-15 to suppress the numerical noise of the matrix products
-    return np.around(R_z(psi) @ R_y(theta) @ R_z(phi), decimals=15)
+    return np.around(R_z(phi) @ R_y(theta) @ R_z(psi), decimals=15)
 
 
 def local_basis(orientation: tuple) -> np.ndarray:
