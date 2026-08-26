@@ -1,6 +1,9 @@
 Surfaces
 ========
 
+.. autoclass:: pysimtra.surfaces.surface.Surface
+   :members:
+
 .. autoclass:: pysimtra.surfaces.circle.Circle
    :members:
 

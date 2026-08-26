@@ -7,7 +7,23 @@ class Surface:
     """
 
     def __init__(self, name: str, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
-                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, int] = None):
+                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, int] | int | None = None):
+
+        """
+        Base class of all SIMTRA surfaces, holding the properties every surface has. It is not meant to be used
+        directly, use one of the subclasses instead.
+
+        :param name: name of the surface
+        :param position: position (x, y, z) in m, relative to the object the surface belongs to
+        :param orientation: orientation (phi, theta, psi) in °, relative to the object the surface belongs to
+        :param save_avg_data: whether the data of the particles deposited on the surface should be saved averaged
+            over the cells of the averaging grid, defaults to False
+        :param save_ind_data: whether the data of every individual particle deposited on the surface should be saved,
+            defaults to False
+        :param avg_grid: averaging grid size, tuple with the number of segments along the two directions of the
+            surface. Which directions these are depends on the surface type, see the subclasses. A single number is
+            used for both directions, no grid averages over the whole surface. Ignored if save_avg_data is False
+        """
 
         # Internal SIMTRA representation
         self.simtra_type: str = None
