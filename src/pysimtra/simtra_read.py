@@ -89,9 +89,9 @@ def parse_chamber(lines: list[str]) -> Chamber:
     :return: Chamber object
     """
 
-    # Find the index of the first parameter, and the one of the last in this section
+    # Find the index of the first parameter and the one at which the following section starts
     start_index = lines.index('\'chamber   ---------------------------------------\n') + 2
-    end_index = lines.index('\'Source   ----------------------------------------\n') - 3
+    end_index = lines.index('\'Source   ----------------------------------------\n')
     # Get the shape of the chamber
     shape = lines[start_index][30:].rstrip()
     # Get the geometrical chamber parameters
@@ -107,17 +107,17 @@ def parse_chamber(lines: list[str]) -> Chamber:
     pressure = float(lines[start_index + 3][30:].rstrip().split(' ')[0])  # Pa
     gas_element = lines[start_index + 4][30:].rstrip()
     seed_number = int(lines[start_index + 5][30:].rstrip())
-    chamber_walls_grid = tuple(int(i) for i in lines[start_index + 6][30:].rstrip().split(' '))
-    # The 'saveDepositionWall' parameter is optional and might not have a value
-    save_deposition_walls = []
-    if lines[start_index + 7][30:] != '\n':
-        save_deposition_walls = [int(i) for i in lines[start_index + 7][30:].rstrip().split(' ')]
-    # The 'saveIndividualData' parameter is optional and is only there if the feature is turned on
-    # Check if the section is long enough to have this parameter
-    save_individual_data = end_index - start_index + 1 == 9
+    # Get the grid used for averaging the particles deposited on the chamber walls. It holds one bin number per axis
+    # for a cuboid and an additional angular one for a cylinder, and is always present, even if averaging is turned off
+    avg_grid = tuple(int(i) for i in lines[start_index + 6][30:].split())
+    # The 'saveDepositionWall' parameter lists the walls whose averaged deposition data is saved. The indices follow
+    # from the chamber shape, so the presence of any of them already tells whether the averaging is turned on
+    save_avg_data = len(lines[start_index + 7][30:].split()) > 0
+    # The 'saveIndividualData' parameter is a key without a value which is only there if the feature is turned on
+    save_ind_data = any(line.startswith('saveIndividualData') for line in lines[start_index:end_index])
     # Construct the chamber object and return it
     return Chamber(shape, _length, temperature, pressure, gas_element, radius, height, width, seed_number,
-                   chamber_walls_grid, save_deposition_walls, save_individual_data)
+                   avg_grid, save_avg_data, save_ind_data)
 
 
 # Parse a single surface and its parameters
@@ -134,24 +134,27 @@ def parse_surface(lines: list[str]) -> Surface:
     surf_type = lines[0][:30].rstrip()
     name = lines[0][30:].rstrip()
     # Get the position and rotation information of the surface
-    r1 = np.array([float(i) for i in lines[1].split(' ')])
-    r2 = np.array([float(i) for i in lines[2].split(' ')])
-    r3 = np.array([float(i) for i in lines[3].split(' ')])
+    r1 = np.array([float(i) for i in lines[1].split()])
+    r2 = np.array([float(i) for i in lines[2].split()])
+    r3 = np.array([float(i) for i in lines[3].split()])
     mat = np.array([r1, r2, r3])
-    # Get the surface parameters
-    surf_params = [float(i) for i in lines[4].rstrip().split(' ')]
+    # Get the surface parameters, which SIMTRA writes with a trailing space behind the last one
+    surf_params = [float(i) for i in lines[4].split()]
     # Store the position of the surface, given by the first row (r1)
     pos = r1.tolist()
     # Calculate the rotation matrix and extract the Euler angles (phi, theta, psi)
     rot_mat = calc_rot_mat(surf_type, mat)
     orient = calc_angles(rot_mat).tolist()
-    # Check whether deposition information on the surface should be stored or not
-    dep_params = lines[5].rstrip().split(' ')
+    # Check whether deposition information on the surface should be stored or not. The line starts with a flag: 0
+    # saves nothing, 1 the averaged data, 2 the individual particle data and 3 both of them
+    dep_params = lines[5].split()
     # Save whether the deposition information should be saved (by default, deactivate all)
     save_avg_data = dep_params[0] == '1' or dep_params[0] == '3'
     save_ind_data = dep_params[0] == '2' or dep_params[0] == '3'
     # Save the grid parameters if the averaged data should be saved
     avg_grid = (int(dep_params[1]), int(dep_params[2])) if save_avg_data else None
+    # Behind the grid follow the quantities SIMTRA averages over it, usually 'N', 'E' and 'NColl'
+    avg_quantities = tuple(dep_params[3:]) if save_avg_data else ()
     # Define the surface variable, which will be a subclass of the Surface class
     surf: Circle | Rectangle | Cylinder | Cone | Sphere | None = None
     # Get the rest of the parameters based on the surface type
@@ -205,10 +208,13 @@ def parse_surface(lines: list[str]) -> Surface:
     elif surf_type == 'spherepiece':
         # Extract the radius from the given matrix
         radius = np.around(length(r2 - r1), 6)
-        # Store the two opening angles
-        dphi, dtheta = float(surf_params[0]), float(surf_params[1])
+        # Store the two opening angles, which SIMTRA writes with theta first
+        dtheta, dphi = float(surf_params[0]), float(surf_params[1])
         # Create the Sphere
         surf = Sphere(name, radius, dphi, pos, orient, dtheta, save_avg_data, save_ind_data, avg_grid)
+    # Keep the quantities the file asks for instead of the default ones, so that they survive a write cycle
+    if avg_quantities:
+        surf.avg_quantities = avg_quantities
     # Return the surface
     return surf
 

@@ -9,7 +9,7 @@ class Cone(Surface):
 
     def __init__(self, name: str, small_rho: float, big_rho: float, height: float, position: tuple = (0, 0, 0),
                  orientation: tuple = (0, 0, 0), dtheta: float = 180, save_avg_data: bool = False,
-                 save_ind_data: bool = False, avg_grid: tuple[int] = None):
+                 save_ind_data: bool = False, avg_grid: tuple[int, int] = None):
 
         """
         :param name: name of the cone
@@ -21,8 +21,10 @@ class Cone(Surface):
         :param dtheta: opening angle of the cone in °, defaults to a full cone
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
-        :param avg_grid: averaging grid size, tuple with number of segments in x and y direction. Ignored if
-            save_avg_data is False
+        :param avg_grid: averaging grid size, tuple with the number of segments along the circumference (theta) and
+            along z², i.e. the second one bins the square of the height coordinate and not the height itself. A single
+            number is used for both directions, no grid averages over the whole cone. Ignored if save_avg_data is
+            False
         """
 
         # Initialize the superclass

@@ -4,7 +4,7 @@ from .plane import Plane
 class Rectangle(Plane):
 
     def __init__(self, name: str, dx: float, dy: float, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
-                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
+                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, int] = None):
 
         """
         :param name: name of the rectangle
@@ -14,7 +14,8 @@ class Rectangle(Plane):
         :param orientation: orientation (phi, theta, psi) in °
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
-        :param avg_grid: averaging grid size, tuple with number of segments in x and y direction
+        :param avg_grid: averaging grid size, tuple with the number of segments along the local x and y direction. A
+            single number is used for both directions, no grid averages over the whole rectangle
         :return: Rectangle object
         """
 

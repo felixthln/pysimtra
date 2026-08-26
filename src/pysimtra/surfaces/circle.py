@@ -5,7 +5,7 @@ class Circle(Plane):
 
     def __init__(self, name: str, radius: float, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
                  dtheta: float = 180, save_avg_data: bool = False, save_ind_data: bool = False,
-                 avg_grid: tuple[int, ...] = None):
+                 avg_grid: tuple[int, int] = None):
         """
         :param name: name of the circle
         :param radius: radius of the circle in m
@@ -14,7 +14,8 @@ class Circle(Plane):
         :param dtheta: opening angle of the circle in °, defaults to a full circle
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
-        :param avg_grid: averaging grid size, tuple with number of segments in x and y direction
+        :param avg_grid: averaging grid size, tuple with the number of segments along the local x and y direction. A
+            single number is used for both directions, no grid averages over the whole circle
         :return: Circle object
         """
 

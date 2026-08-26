@@ -10,7 +10,7 @@ class Plane(Surface):
 
     def __init__(self, name: str, _type: str, position: tuple = (0, 0, 0), orientation: tuple = (0, 0, 0),
                  radius: float = None, dtheta: float = 180, dx: float = None, dy: float = None,
-                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, ...] = None):
+                 save_avg_data: bool = False, save_ind_data: bool = False, avg_grid: tuple[int, int] = None):
 
         """
         :param name: name of the planepiece
@@ -23,7 +23,8 @@ class Plane(Surface):
         :param dy: half height of the rectangle in m
         :param save_avg_data: whether the average data should be saved, defaults to False
         :param save_ind_data: whether the individual data should be saved, defaults to False
-        :param avg_grid: averaging grid size, tuple with number of segments in x and y direction. Ignored if
+        :param avg_grid: averaging grid size, tuple with the number of segments along the local x and y direction. A
+            single number is used for both directions, no grid averages over the whole plane. Ignored if
             save_avg_data is False
         """
 

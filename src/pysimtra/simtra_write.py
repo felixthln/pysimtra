@@ -20,6 +20,13 @@ def write(key: str, value, file, unit: str = None):
     file.write(string + '\n')
 
 
+# Function to save a list of numerical parameters of a surface
+def write_params(params: list, file):
+
+    # SIMTRA writes each parameter followed by a space, so that the line ends with a trailing one
+    file.write(''.join('%g ' % p for p in params) + '\n')
+
+
 # Function to save all chamber parameters
 def write_chamber(ch: Chamber, file):
 
@@ -37,12 +44,15 @@ def write_chamber(ch: Chamber, file):
     write('gasElement', ch.gas_element, file)
     # Add the seed number
     write('seed', ch.seed_number, file)
-    # Save the chamber walls grid
-    file.write('{:<30}'.format('chamberWallsGrid') + ' '.join('%g' % c for c in ch.chamber_walls_grid) + '\n')
-    # Save the indices of deposition walls for which deposition info should be saved
-    file.write('{:<30}'.format('saveDepositionWall') + ' '.join('%g' % s for s in ch.save_deposition_walls) + '\n')
-    # If the individual particle data should be saved, add the parameter
-    if ch.save_individual_data:
+    # Save the grid used for averaging the particles deposited on the chamber walls. SIMTRA writes one bin number per
+    # axis for a cuboid and an additional angular one for a cylinder, each of them followed by a space. The grid is
+    # written no matter whether the averaging is enabled, in which case it holds the SIMTRA default of 10 (and 180)
+    file.write('{:<30}'.format('chamberWallsGrid') + ''.join('%d ' % c for c in ch.avg_grid) + '\n')
+    # Save the indices of the walls for which the averaged deposition info should be saved. They are not freely
+    # choosable but follow from the chamber shape, the key being left without a value if averaging is turned off
+    file.write('{:<30}'.format('saveDepositionWall') + ' '.join('%d' % s for s in ch.save_deposition_walls) + '\n')
+    # If the individual particle data should be saved, add the parameter, which is a key without a value
+    if ch.save_ind_data:
         file.write('saveIndividualData\n')
     # Add the spacer to end this section
     file.write('\'-------------------------------------------------\n\n')
@@ -91,7 +101,8 @@ def write_surface(sur: Surface, file):
     file.write(' '.join('%g' % s for s in np.ravel(R[0])) + '\n')
     file.write(' '.join('%g' % s for s in np.ravel(R[1])) + '\n')
     file.write(' '.join('%g' % s for s in np.ravel(R[2])) + '\n')
-    # Add the shape-dependent parameters
+    # Add the shape-dependent parameters. SIMTRA writes each of them followed by a space, the line therefore ending
+    # with a trailing one
     if isinstance(sur, Circle) or isinstance(sur, Rectangle) or isinstance(sur, Plane):
         # Store the type of the planepiece
         p1 = 1 if sur.plane_type == 'rectangle' else 2
@@ -103,21 +114,24 @@ def write_surface(sur: Surface, file):
         p5 = 0 if sur.perforation_type is None else sur.inner_param_1
         p6 = 0 if sur.perforation_type is None else sur.inner_param_2
         # Write the parameters to the file
-        file.write(' '.join('%g' % s for s in [p1, p2, p3, p4, p5, p6]) + '\n')
+        write_params([p1, p2, p3, p4, p5, p6], file)
     elif isinstance(sur, Cylinder):
         # Store the opening angle
-        file.write('%g' % sur.dtheta + '\n')
+        write_params([sur.dtheta], file)
     elif isinstance(sur, Cone):
         # Store the small radius and the opening angle
-        file.write(' '.join('%g' % s for s in [sur.small_rho, sur.dtheta]) + '\n')
+        write_params([sur.small_rho, sur.dtheta], file)
     elif isinstance(sur, Sphere):
-        # Store the two opening angles
-        file.write(' '.join('%g' % s for s in [sur.dphi, sur.dtheta]) + '\n')
-    # Store whether depositions on the surface should be saved
+        # Store the two opening angles, theta first, as verified against a sphere whose angles differ
+        write_params([sur.dtheta, sur.dphi], file)
+    # Store whether depositions on the surface should be saved. The leading number is a flag: 0 saves nothing, 1 the
+    # averaged data, 2 the individual particle data and 3 both of them
     if sur.save_avg_data:
         # Change the prefix depending on whether the data should be saved double
         ind = '3' if sur.save_ind_data else '1'
-        file.write(ind + ' ' + ' '.join(str(s) for s in sur.avg_grid) + ' N E NColl\n')
+        # Behind the flag follow the two bin numbers of the averaging grid and the averaged quantities
+        file.write(ind + ' ' + ' '.join('%d' % s for s in sur.avg_grid) + ' ' +
+                   ' '.join(sur.avg_quantities) + '\n')
     elif sur.save_ind_data:
         file.write('2\n')
     # If no data should be saved, add a zero
