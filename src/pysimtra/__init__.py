@@ -6,8 +6,8 @@ from .surfaces import Circle, Rectangle, Cylinder, Cone, Sphere
 from .components import Chamber, Magnetron, DummyObject
 # Import the sputter system class
 from .sputter_system import SputterSystem
-# Import the SIMTRA simulation class
-from .simtra import SimtraSimulation
+# Import the SIMTRA simulation class together with the error raised on a failed run
+from .simtra import SimtraSimulation, SimtraError, SimtraRun
 # Import the SimtraOutput class
 from .simtra import SimtraOutput
 # Import the functions for reading and writing SIMTRA files
@@ -46,3 +46,6 @@ def import_exe(path: Path | str):
     # Also create a directory for storing the temporary SIMTRA files
     temp_path = Path(__file__).parent / 'temporary'
     temp_path.mkdir(parents=True, exist_ok=True)
+    # Tell the user that the import worked, as this method is only called once and gives no other feedback
+    print('SIMTRA was successfully imported from "%s" into "%s". Simulations can now be run on Windows without '
+          'calling "import_exe" again.' % (str(path), str(dest_path)))

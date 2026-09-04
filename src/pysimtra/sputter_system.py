@@ -82,7 +82,8 @@ class SputterSystem:
         # Create the class
         return cls(chamber=ch, magnetrons=mags, dummy_objects=obj, output_path=output_path)
 
-    def simulate(self, magnetrons: list[str] | None = None, n_sim: int = 1) -> SimtraOutput | list[SimtraOutput]:
+    def simulate(self, magnetrons: list[str] | None = None, n_sim: int = 1,
+                 verbose: bool = False) -> SimtraOutput | list[SimtraOutput]:
 
         """
         Performs a simulation of the sputter system by storing the components temporarily as ".sin" files
@@ -93,6 +94,8 @@ class SputterSystem:
             simulated
         :param n_sim: number of simulations of each magnetron. If n > 1, seed numbers are randomly generated and all
             simulation results will be combined for each magnetron
+        :param verbose: if True, the console output of SIMTRA is printed while the simulations are running. Useful for
+            troubleshooting, as SIMTRA reports problems with an input file on the console only
         :return: either a single SimtraOutput object or a list of SimtraOutput objects for every simulated magnetron
             containing the simulation results
         """
@@ -121,7 +124,7 @@ class SputterSystem:
                 # Save the magnetron together with the chamber and dummy objects as a SIMTRA file
                 write_sin(out_path, self.chamber, mag, d_obj, sin_path)
         # Run the simulation
-        sim_res = self._simtra_sim.run(temp_sin_paths, delete_input_files=True)
+        sim_res = self._simtra_sim.run(temp_sin_paths, delete_input_files=True, verbose=verbose)
         # Go through the simulation results and combine results when multiple simulations of every magnetron were done
         # PyCharm does not recognize that the "sum()" function works on the SimtraOutput objects too, therefore supress
         # the warnings
