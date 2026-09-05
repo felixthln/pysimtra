@@ -99,6 +99,20 @@ class SimtraSimulation:
         # Console output of the runs of the last "run" call, kept for troubleshooting successful but suspicious runs
         self.runs: list[SimtraRun] = []
 
+    @property
+    def exe_path(self) -> Path:
+
+        """
+        Path of the SIMTRA command line executable the simulations are run with, either the one that was imported into
+        the package or the one that was passed to the constructor. It is exposed so that a caller which schedules the
+        simulations itself, e.g. to keep every core busy across a stream of input files rather than one list at a
+        time, can hand it to "run_sim" instead of having to locate the executable a second time.
+
+        :return: path to the "simtra_cmd.exe"
+        """
+
+        return self._exe_path
+
     @staticmethod
     def _check_run(run: SimtraRun) -> bool:
 
