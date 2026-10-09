@@ -1,4 +1,5 @@
 from pathlib import Path
+import warnings
 from datetime import timedelta  # datetime,
 from dateutil import parser
 from typing import Any, Callable
@@ -18,8 +19,13 @@ class SimtraOutput:
     Class for handling the Simtra outputs. All averaged results are stored as nested dictionaries, keyed first by the
     name of the object and second by the name of the surface, e.g. "n_particles['substrate']['grid']". Only surfaces
     with the "save_avg_data" attribute appear. The magnetron launching the particles is stored under its own name like
-    any other object; note that the particles counted on its sputtering surface are the redeposited ones.
+    any other object; note that the particles counted on its sputtering surface are the redeposited ones. The chamber
+    walls are stored under the name in "CHAMBER", with the walls as surfaces: "mantle", "zmin" and "zmax" for a
+    cylindrical chamber and "xmin", "xmax", "ymin", "ymax", "zmin" and "zmax" for a cuboid one.
     """
+
+    # Name under which the chamber walls are stored next to the objects
+    CHAMBER = 'chamber'
 
     def __init__(self, metadata: dict[str, Any] | list[dict[str, Any]], source: str | None = None,
                  n_particles: AvgData = None, e_incidence: AvgData = None, l_path: AvgData = None,
@@ -53,7 +59,8 @@ class SimtraOutput:
     def load_metadata(output_path: Path) -> dict[str, Any]:
 
         """
-        Loads the metadata of the sputtering simulation, i.e. runtime and start time.
+        Loads the metadata of the sputtering simulation: the simulation time, the start and finish time and the number
+        of particles redeposited on the target.
 
         :param output_path: path to the Simtra output
         :return: dictionary with all metadata of the simulation
@@ -77,8 +84,9 @@ class SimtraOutput:
             metadata['start time'] = start_time
             # Calculate the finish time based on the start time and the simulation time
             metadata['finish time'] = start_time + timedelta(seconds=n_seconds)
-            # Get the number of deposited particles
-            metadata['number of particles'] = int(lines[4].rstrip().split(':\t')[1])
+            # Get the number of particles which were redeposited on the target. SIMTRA writes no other particle
+            # number into this file; the number of launched particles is in the header of every "N.txt" instead
+            metadata['redeposited particles'] = int(lines[4].rstrip().split(':\t')[1])
             # Return the metadata object
             return metadata
 
@@ -88,7 +96,10 @@ class SimtraOutput:
         """
         Loads all averaged files with a given file name found in a Simtra output. SIMTRA stores the files of the dummy
         objects as "depositionDummyObjects/<object>/<surface>/<f_name>", but the ones of the magnetron launching the
-        particles as "depositionMagnetron/<surface>/<f_name>", i.e. without the name of the magnetron.
+        particles as "depositionMagnetron/<surface>/<f_name>", i.e. without the name of the magnetron. The chamber walls
+        are stored as "depositionChamber/<wall>/<f_name>" and are filed under the name in "CHAMBER". Each wall's grid
+        consists of the two numbers of the chamber's averaging grid lying in the plane of the wall, e.g. (theta, z)
+        for the mantle of a cylinder or (y, z) for the x-walls of a cuboid.
 
         :param output_path: path to the Simtra output
         :param f_name: file name to look for
@@ -102,6 +113,12 @@ class SimtraOutput:
         files = [(p.parents[1].name, p) for p in sorted((output_path / 'depositionDummyObjects').glob('*/*/' + f_name))]
         # Add the files of the magnetron, which lack the object directory
         files += [(mag_name, p) for p in sorted((output_path / 'depositionMagnetron').glob('*/' + f_name))]
+        # An object with the name of the chamber would get its surfaces mixed up with the chamber walls
+        if any(obj_name == SimtraOutput.CHAMBER for obj_name, _ in files):
+            warnings.warn('An object is named "%s", its surfaces are stored together with the chamber walls.'
+                          % SimtraOutput.CHAMBER)
+        # Add the files of the chamber walls, which lack an object directory as well
+        files += [(SimtraOutput.CHAMBER, p) for p in sorted((output_path / 'depositionChamber').glob('*/' + f_name))]
         # Load each file into the dictionary of its object, with the directory name being the surface name
         for obj_name, p in files:
             outputs.setdefault(obj_name, {})[p.parent.name] = pd.read_csv(p, sep='\t', skiprows=1,
