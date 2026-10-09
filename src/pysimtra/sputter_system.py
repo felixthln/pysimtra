@@ -97,7 +97,8 @@ class SputterSystem:
         :param verbose: if True, the console output of SIMTRA is printed while the simulations are running. Useful for
             troubleshooting, as SIMTRA reports problems with an input file on the console only
         :return: either a single SimtraOutput object or a list of SimtraOutput objects for every simulated magnetron
-            containing the simulation results
+            containing the simulation results. Inside each of them, the results are keyed by object name and surface
+            name, e.g. "n_particles['substrate']['grid']", with the simulated magnetron filed under its own name
         """
 
         # Get a list of all magnetron names in case no list is provided

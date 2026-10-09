@@ -428,3 +428,25 @@ def read_output_path_from_sin(path: str | Path) -> Path:
         lines = file.readlines()
         # Get the output folder and return it
         return Path(lines[0][30:].rstrip())
+
+
+def read_magnetron_name_from_sin(path: str | Path) -> str:
+
+    """
+    Also parses a SIMTRA ".sin" file, but only reads the name of the magnetron object, i.e. the one launching the
+    particles
+
+    :param path: path to the SIMTRA input file
+    :return: name of the magnetron object defined in the input file
+    """
+
+    # Convert the path from string if necessary
+    path = Path(path) if isinstance(path, str) else path
+    # Open the file and parse the parameters
+    with open(path) as file:
+        for line in file:
+            # The name follows the padded key and is terminated by the opening bracket of the object
+            if line.startswith('magnetronObject'):
+                return line[30:].rstrip().rstrip('{').rstrip()
+    # If no magnetron object was found, the file is not a valid SIMTRA input file
+    raise ValueError('No magnetron object was found in the file %s.' % path)
